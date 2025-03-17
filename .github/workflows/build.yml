@@ -1,0 +1,31 @@
+name: Create PDF
+
+on:
+  pull_request:
+  
+  workflow_dispatch:  
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4  
+
+      - name: Install texlive
+        run: |
+          sudo apt update
+          sudo apt-get install -y cm-super  
+          sudo apt-get install -y texlive-xetex texlive-latex-extra texlive-lang-cyrillic texlive-science biber
+          sudo fc-cache -fv 
+
+      - name: Build PDF
+        run: |
+          latexmk -xelatex -synctex=1 -outdir=out -interaction=nonstopmode -file-line-error --shell-escape practice_report.tex
+
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v4  
+        with:
+          name: practice_order.pdf  
+          path: out/practice_order.pdf  
