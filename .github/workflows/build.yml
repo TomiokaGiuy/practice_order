@@ -12,16 +12,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4  
 
-      - name: Install texlive
+      - name: Install dependencies
         run: |
           sudo apt update
-          sudo apt-get install -y cm-super  
-          sudo apt-get install -y texlive-xetex texlive-latex-extra texlive-lang-cyrillic texlive-science biber latexmk
+          sudo apt-get install -y cm-super texlive-full inkscape
           sudo fc-cache -fv 
 
       - name: Build PDF
         run: |
-          latexmk -xelatex -synctex=1 -interaction=nonstopmode -file-line-error --shell-escape -jobname=practice_report practice_report.tex
+          latexmk -xelatex -f -synctex=1 -interaction=nonstopmode -file-line-error --shell-escape -jobname=practice_report practice_report.tex
 
       - name: Upload PDF artifact
         uses: actions/upload-artifact@v4  
