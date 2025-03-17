@@ -15,7 +15,14 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt update
-          sudo apt-get install -y cm-super texlive-full inkscape
+          sudo apt-get install -y cm-super \
+                                  texlive-xetex \
+                                  texlive-latex-extra \
+                                  texlive-lang-cyrillic \
+                                  texlive-science \
+                                  texlive-pictures \
+                                  fonts-texgyre \
+                                  inkscape
           sudo fc-cache -fv 
 
       - name: Build PDF
