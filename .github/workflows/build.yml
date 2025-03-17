@@ -2,12 +2,11 @@ name: Create PDF
 
 on:
   pull_request:
-  
-  workflow_dispatch:  
+  workflow_dispatch:
 
 jobs:
   build:
-    runs-on: ubuntu-latest  
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
@@ -17,15 +16,15 @@ jobs:
         run: |
           sudo apt update
           sudo apt-get install -y cm-super  
-          sudo apt-get install -y texlive-xetex texlive-latex-extra texlive-lang-cyrillic texlive-science biber
+          sudo apt-get install -y texlive-xetex texlive-latex-extra texlive-lang-cyrillic texlive-science biber latexmk
           sudo fc-cache -fv 
 
       - name: Build PDF
         run: |
-          latexmk -xelatex -synctex=1 -outdir=out -interaction=nonstopmode -file-line-error --shell-escape practice_report.tex
+          latexmk -xelatex -synctex=1 -interaction=nonstopmode -file-line-error --shell-escape -jobname=practice_report practice_report.tex
 
       - name: Upload PDF artifact
         uses: actions/upload-artifact@v4  
         with:
-          name: practice_order.pdf  
-          path: out/practice_order.pdf  
+          name: practice_report.pdf  
+          path: practice_report.pdf
