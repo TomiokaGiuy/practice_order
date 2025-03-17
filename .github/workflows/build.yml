@@ -23,8 +23,7 @@ jobs:
       - name: Build PDF
         run: |
           xelatex -interaction=nonstopmode -halt-on-error practice_report.tex
-          xelatex -interaction=nonstopmode -halt-on-error practice_report.tex  # Двойной прогон для кросс-ссылок
-
+          xelatex -interaction=nonstopmode -halt-on-error practice_report.tex  
       - name: Upload PDF artifact
         uses: actions/upload-artifact@v4
         with:
