@@ -2,30 +2,28 @@ name: Create PDF
 
 on:
   pull_request:
-  workflow_dispatch:
+    branches:
+    workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4  
+        uses: actions/checkout@v4
 
       - name: Install dependencies
         run: |
-          sudo apt update
-          sudo apt-get install -y latexmk texlive-xetex texlive-latex-extra \
-                                  texlive-lang-cyrillic texlive-science \
-                                  texlive-pictures fonts-texgyre inkscape
-          sudo fc-cache -fv 
+          sudo apt-get update
+          sudo apt-get install -y texlive-xetex texlive-fonts-recommended texlive-lang-cyrillic
 
       - name: Build PDF
         run: |
-          latexmk -xelatex -f -synctex=1 -interaction=nonstopmode -file-line-error --shell-escape -jobname=practice_report practice_report.tex
+          xelatex -interaction=nonstopmode -halt-on-error practice_report.tex
+          xelatex -interaction=nonstopmode -halt-on-error practice_report.tex  # Двойной прогон для кросс-ссылок
 
       - name: Upload PDF artifact
-        uses: actions/upload-artifact@v4  
+        uses: actions/upload-artifact@v4
         with:
-          name: practice_report.pdf  
+          name: compiled-pdf
           path: practice_report.pdf
