@@ -8,22 +8,28 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y texlive-xetex texlive-fonts-recommended texlive-lang-cyrillic
+    - name: Set up TeX Live
+      uses: xu-cheng/texlive-action@v2
+      with:
+        texlive_version: 2023  
+        scheme: full 
+        
+    - name: Install missing LaTeX packages
+      run: |
+        tlmgr install nicematrix
 
-      - name: Build PDF
-        run: |
-          xelatex -interaction=nonstopmode -halt-on-error practice_report.tex
-          xelatex -interaction=nonstopmode -halt-on-error practice_report.tex  # Двойной прогон для кросс-ссылок
+    - name: Compile LaTeX document
+      run: |
+        xelatex -interaction=nonstopmode -halt-on-error practice_report.tex
+        xelatex -interaction=nonstopmode -halt-on-error practice_report.tex  # Двойная компиляция
 
-      - name: Upload PDF artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: compiled-pdf
-          path: practice_report.pdf
+    - name: Upload PDF artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: practice_report.pdf
+        path: practice_report.pdf
