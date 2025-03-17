@@ -15,16 +15,13 @@ jobs:
       - name: Install dependencies 
         run: |
           sudo apt-get update
-          sudo apt-get install -y texlive-xetex texlive-fonts-recommended texlive-lang-cyrillic
-          sudo tlmgr update --self
-          sudo tlmgr install nicematrix
+          sudo apt-get install -y texlive-full
 
 
       - name: Build PDF
         run: |
           xelatex -interaction=nonstopmode -halt-on-error practice_report.tex
-          xelatex -interaction=nonstopmode -halt-on-error practice_report.tex  # Двойной прогон для кросс-ссылок
-
+          xelatex -interaction=nonstopmode -halt-on-error practice_report.tex  
       - name: Upload PDF artifact
         uses: actions/upload-artifact@v4
         with:
