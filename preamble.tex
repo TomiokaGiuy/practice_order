@@ -24,8 +24,16 @@
 
 \usepackage{caption}
 
+\makeatletter
+\renewcommand\large{\@setfontsize\large{13pt}{15.6pt}} 
+\makeatother
+
 \usepackage{caption} % для того, чтобы редактировать подписи к картинкам
-\captionsetup[figure]{labelsep=space}
+\captionsetup[figure]{
+    font={large}, 
+    labelsep=space
+ }
+
 
 \usepackage{rotating} % для вращения картинок
 
