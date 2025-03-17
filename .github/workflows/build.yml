@@ -17,7 +17,7 @@ jobs:
         run: |
           sudo apt update
           sudo apt-get install -y cm-super  
-          sudo apt-get install -y texlive-xetex texlive-latex-extra texlive-lang-cyrillic texlive-science biber
+          sudo apt-get install -y texlive-xetex texlive-latex-extra texlive-lang-cyrillic texlive-science biber latexmk
           sudo fc-cache -fv 
 
       - name: Build PDF
