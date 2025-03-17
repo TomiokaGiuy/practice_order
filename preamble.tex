@@ -61,14 +61,17 @@
     \setmainlanguage[babelshorthands = true]{russian} % устанавливаемя русский как основной язык
     \setotherlanguage{english} % устанавливаем английский как дополнительный язык
 
-    \setmainfont{Times New Roman} % устанавливаем главный шрифт 
-    \setsansfont[Ligatures=TeX]{Arial} % устонавливаем дополнительный шрмфт 
-
-    \newfontfamily\cyrillicfont[Script=Cyrillic]{Times New Roman} % делаем так, чтобы русский язык мог отображаться главным шрифтом 
-    \newfontfamily\cyrillicfontsf[Script=Cyrillic]{Arial} % делаем так, чтобы русский язык мог отображаться дополнительным шрифтом 
-
-    \newfontfamily\englishfont{Times New Roman} % делаем так, чтобы английский язык мог отображаться главным шрифтом 
-    \newfontfamily\englishfontsf{Arial} % делаем так, чтобы английский язык мог отображаться дополнительным шрифтом 
+    \setmainfont{Times New Roman}
+    \setmonofont{Courier New}
+    \setsansfont{Arial}
+  
+    \newfontfamily\cyrillicfont[Script=Cyrillic]{Times New Roman}
+    \newfontfamily\cyrillicfontsf[Script=Cyrillic]{Arial}
+    \newfontfamily\cyrillicfonttt[Script=Cyrillic]{Times New Roman}
+  
+    \newfontfamily\englishfont{Times New Roman}
+    \newfontfamily\englishfontsf{Arial}
+    \newfontfamily\englishfonttt{Times New Roman}
 
 % Определяем переменные 
     \newcommand\spc{\hspace{0.08cm}} % отступ от каунтера
@@ -149,3 +152,31 @@
     \setcounter{tablecntr}{1}
     \newcounter{itemcntr}
     \setcounter{itemcntr}{1}
+
+    \usepackage{csquotes}
+
+    % настройка списка источников
+\usepackage[
+    language = auto,        % Получение языка из babel.
+    autolang = other,       % Многоязычная библиография.
+    defernumbers = true,    % Раздельная нумерация.
+    style = gost-numeric,
+    maxnames = 10,
+    movenames = false,
+    sorting = ynt
+]{biblatex} % To load multiple bib files.
+
+
+% Библиографический список в соответствии с ГОСТ.
+\makeatletter
+\ltx@iffilelater{biblatex-gost.def}{2017/02/01}%
+{\toggletrue{bbx:gostbibliography}%
+    \renewcommand*{\revsdnamepunct}{\addcomma}}{}
+\makeatother
+
+% Общий список.
+\addbibresource{bibtex_base.bib}
+
+\renewcommand{\bibfont}{\fontsize{13pt}{15.6pt}\selectfont}
+
+\sloppy
